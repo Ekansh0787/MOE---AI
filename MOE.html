@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoE AI — Mixture-of-Experts Demonstration</title>
+  <meta name="description" content="A visual, educational demonstration of a Mixture-of-Experts AI system with a secure backend, configurable LLM providers and honest metrics." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬡</text></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <aside id="sidebar" aria-label="Main navigation">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">⬡</span>
+        <span class="brand-name">MoE&nbsp;AI</span>
+      </div>
+
+      <nav id="nav">
+        <button class="nav-item" data-route="chat">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>Chat</span>
+        </button>
+        <button class="nav-item" data-route="environmental">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span>Environmental</span>
+        </button>
+        <button class="nav-item" data-route="dashboard">
+          <svg viewBox="0 0 24 24" class="nav-icon"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-route="experts">
+          <svg viewBox="0 0 24 24" class="nav-icon"><circle cx="9" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 19c.6-3 3-4.6 5.5-4.6s4.9 1.6 5.5 4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 5.2a3 3 0 0 1 0 5.6M17.5 14.6c1.6.7 2.7 2 3 4.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>Experts</span>
+        </button>
+        <button class="nav-item" data-route="analytics">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>Analytics</span>
+        </button>
+        <button class="nav-item" data-route="history">
+          <svg viewBox="0 0 24 24" class="nav-icon"><path d="M12 8v4l3 2M21 12a9 9 0 1 1-2.6-6.4M21 3v4h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>History</span>
+        </button>
+        <button class="nav-item" data-route="settings">
+          <svg viewBox="0 0 24 24" class="nav-icon"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.6-2-3.4-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.4 2.6a7 7 0 0 0-2 1.2l-2.5-1-2 3.4 2 1.6a7 7 0 0 0 0 2.4l-2 1.6 2 3.4 2.5-1a7 7 0 0 0 2 1.2L10 21h4l.4-2.6a7 7 0 0 0 2-1.2l2.5 1 2-3.4-2-1.6c.06-.4.1-.8.1-1.2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <span>Settings</span>
+        </button>
+        <button class="nav-item" data-route="about">
+          <svg viewBox="0 0 24 24" class="nav-icon"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 11v5M12 8v.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>About</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div id="modeBadgeSidebar" class="badge badge-amber hidden">Demo Mode</div>
+        <div class="sidebar-version">v1.0.0 · educational demo</div>
+      </div>
+    </aside>
+
+    <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle navigation">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <div id="sidebarScrim" class="scrim hidden"></div>
+
+    <main id="content" tabindex="-1"></main>
+  </div>
+
+  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
+  <div id="modalRoot"></div>
+
+  <script src="api.js"></script>
+  <script src="charts.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
